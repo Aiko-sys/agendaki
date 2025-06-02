@@ -12,20 +12,21 @@
  - usuarios: {id, nome, email, tipo}
  - espacos: {id, nome, descricao, disponibilidade[]}
  - agendamentos: {id, espaco_id, usuario_id, data_hora, status}
+
 ### Bibliotecas:
  - table_calendar
  - cloud_firestore
- -firebase_auth
+ - firebase_auth
 ### Integrações:
- -Firebase
+ - Firebase
  - EmailJS ou Firebase Functions para envio de confirmação
 
 
 ## Equipe
-    - Nalyson: frontend
-    - Aiko: backend
-    - Kennedy: frontend
-    - Souzinha: frontend
-    - Kaik: backend
+ - Nalyson: frontend
+ - Aiko: backend
+ - Kennedy: frontend
+ - Souzinha: frontend
+ - Kaik: backend
 
 ### Prazo: dia 30/06
