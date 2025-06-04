@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import '../widgets/espaco_card.dart';
+
+final Color laranja = const Color(0xFFF67828);
 
 class EspacosScreen extends StatelessWidget {
   const EspacosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Color laranja = const Color(0xFFF67828);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: laranja,
@@ -19,20 +18,105 @@ class EspacosScreen extends StatelessWidget {
             fontSize: 24,
             color: Colors.white,
           ),
-
-          
         ),
       ),
-      body: ListView(
-        children: const [
-          SizedBox(height: 16),
-          EspacoCard(icon: Icons.sports_volleyball, titulo: 'Quadras de Vôlei'),
-          EspacoCard(icon: Icons.sports_soccer, titulo: 'Campos de Fut7'),
-          EspacoCard(icon: Icons.beach_access, titulo: 'Arena de Beach Tênis'),
-          EspacoCard(icon: Icons.sports_tennis, titulo: 'Mesas de Ping Pong'),
-          EspacoCard(icon: Icons.pool, titulo: 'Piscinas'),
-          SizedBox(height: 16),
-        ],
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: laranja),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.account_circle, size: 60, color: Colors.white),
+                  SizedBox(height: 8),
+                  Text(
+                    'Aiko yara',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Início'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.event_note),
+              title: const Text('Minhas Reservas'),
+              onTap: () {
+                Navigator.pop(context);
+                
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Sair'),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          children: const [
+            EspacoCard(nome: 'Quadra de Vôlei', icone: Icons.sports_volleyball),
+            EspacoCard(nome: 'Campo de Fut7', icone: Icons.sports_soccer),
+            EspacoCard(nome: 'Beach Tênis', icone: Icons.sports_tennis),
+            EspacoCard(nome: 'Ping Pong', icone: Icons.sports),
+            EspacoCard(nome: 'Piscina', icone: Icons.pool),
+            EspacoCard(nome: 'Ginásio', icone: Icons.sports_basketball),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EspacoCard extends StatelessWidget {
+  final String nome;
+  final IconData icone;
+
+  const EspacoCard({super.key, required this.nome, required this.icone});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: InkWell(
+        onTap: () {
+         
+        },
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icone, size: 48, color: laranja),
+              const SizedBox(height: 8),
+              Text(
+                nome,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[800],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
