@@ -1,8 +1,15 @@
+import 'package:flutter/material.dart';
+import '../screens/login_screen.dart';
+import '../screens/espacos_screen.dart';
+
 class AppRoutes {
-  static const login = '/login';
-  static const register = '/register';
-  static const espacos = '/espacos';
-  static const agendamento = '/agendamento';
-  static const minhasReservas = '/minhas-reservas';
-  static const admin = '/admin';
+  static const String login = '/login';
+  static const String espacos = '/espacos';
+
+  static Map<String, WidgetBuilder> getRoutes() {
+    return {
+      login: (context) => const LoginScreen(),
+      espacos: (context) => const EspacosScreen(),
+    };
+  }
 }
