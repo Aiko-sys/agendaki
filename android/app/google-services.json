@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "4980749607",
+    "project_id": "agendaki-c0619",
+    "storage_bucket": "agendaki-c0619.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4980749607:android:7c81fed02118c63a796502",
+        "android_client_info": {
+          "package_name": "br.com.agendaki"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5mtJMBCZ6EBEKD10yrhAvbW1dnu1FBt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
