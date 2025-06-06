@@ -28,17 +28,34 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       isLoading = true;
     });
-    try {
-      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      // Login OK, navega pra próxima tela
-      Navigator.pushReplacementNamed(context, AppRoutes.espacos);
+      try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+
+      // Verifique se o usuário realmente existe
+      if (userCredential.user != null) {
+        // Login OK - navega para a próxima tela
+        Navigator.pushReplacementNamed(context, AppRoutes.espacos);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Usuário não encontrado')),
+        );
+      }
     } on FirebaseAuthException catch (e) {
-      // Mostra erro para o usuário
+      String mensagemErro = 'Erro no login.';
+
+      if (e.code == 'user-not-found') {
+        mensagemErro = 'Usuário não encontrado.';
+      } else if (e.code == 'wrong-password' || e.code == 'invalid-email') {
+        mensagemErro = 'Email ou Senha inválidos';
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro no login: ${e.message}')),
+        SnackBar(content: Text(mensagemErro)),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro inesperado: $e')),
       );
     } finally {
       setState(() {
@@ -137,9 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, AppRoutes.espacos);
-                        },
+                        onPressed: login,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: laranjaForte,
                           padding: const EdgeInsets.symmetric(vertical: 16),
