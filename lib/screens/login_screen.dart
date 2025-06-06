@@ -111,6 +111,29 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, AppRoutes.espacos);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: laranjaForte,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text(
+                          'Cadastrar',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
