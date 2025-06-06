@@ -1,8 +1,51 @@
 import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget{
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> login() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      // Login OK, navega pra próxima tela
+      Navigator.pushReplacementNamed(context, AppRoutes.espacos);
+    } on FirebaseAuthException catch (e) {
+      // Mostra erro para o usuário
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro no login: ${e.message}')),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +104,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     TextFormField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
                         labelStyle: TextStyle(color: laranjaForte),
@@ -75,9 +119,10 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'Senha',
+                        labelText: 'password',
                         labelStyle: TextStyle(color: laranjaForte),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
