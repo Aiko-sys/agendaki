@@ -35,7 +35,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     emailController.clear();
     passwordController.clear();
 
-    // Navigator.pushNamed(context, '/listar');
+    Navigator.pushNamed(context, '/login');
   }
 
 @override
