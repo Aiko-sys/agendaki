@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import './../services/user_service.dart';
 
 final Color laranja = const Color(0xFFF67828);
 
-class EspacosScreen extends StatelessWidget {
+class EspacosScreen extends StatefulWidget {
   const EspacosScreen({super.key});
+
+  @override
+  State<EspacosScreen> createState() => _EspacosScreenState();
+}
+
+class _EspacosScreenState extends State<EspacosScreen> {
+  String? userName;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  void loadUser() async {
+    final data = await UserService.carregarDadosUsuario();
+    if (data != null) {
+      setState(() {
+        userName = data['name'];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +50,19 @@ class EspacosScreen extends StatelessWidget {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(color: laranja),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.account_circle, size: 60, color: Colors.white),
-                  SizedBox(height: 8),
+                  const Icon(Icons.account_circle, size: 60, color: Colors.white),
+                  const SizedBox(height: 8),
                   Text(
-                    'Aiko yara',
-                    style: TextStyle(
+                    '$userName',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -52,13 +76,13 @@ class EspacosScreen extends StatelessWidget {
               title: const Text('Minhas Reservas'),
               onTap: () {
                 Navigator.pop(context);
-                
               },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Sair'),
-              onTap: () {
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
                 Navigator.pushReplacementNamed(context, '/login');
               },
             ),
@@ -97,9 +121,7 @@ class EspacoCard extends StatelessWidget {
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
-        onTap: () {
-         
-        },
+        onTap: () {},
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
