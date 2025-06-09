@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserService {
-  static Future<Map<String, dynamic>?> carregarDadosUsuario() async {
+  static Future<Map<String, dynamic>?> loadUserData() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) return null;
 
