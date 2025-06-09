@@ -4,6 +4,7 @@ import '../screens/espacos_screen.dart';
 import '../screens/cadastro_screen.dart';
 import '../screens/agendamento_screen.dart';
 import '../screens/mi_reservas.dart'; 
+import '../screens/agendamento_screen.dart';
 import './../widgets/auth_guard.dart';
 
 class AppRoutes {
@@ -17,7 +18,11 @@ class AppRoutes {
     return {
       login: (context) => const LoginScreen(),
 
+
       cadastro: (context) => const CadastroScreen(),
+
+
+      // cadastro: (context) => const CadastroScreen(), // Ative quando for usar
 
       espacos: (context) => AuthGuard(child: const EspacosScreen()),
 
@@ -32,7 +37,15 @@ class AppRoutes {
         }
       },
 
+
       minhasReservas: (context) => AuthGuard(child: const MinhasReservasScreen()),
+
+      cadastro: (context) => const CadastroScreen(),
+      espacos: (context) => AuthGuard(child: EspacosScreen()),
+
+      cadastro: (context) => const CadastroScreen(),
+      espacos: (context) => AuthGuard(child: EspacosScreen()),
+
     };
   }
 }
