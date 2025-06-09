@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './../services/user_service.dart';
+import 'agendamento_screen.dart';
 
 final Color laranja = const Color(0xFFF67828);
 
 class EspacosScreen extends StatefulWidget {
-  const EspacosScreen({super.key});
+  const EspacosScreen({Key? key}) : super(key: key);
 
   @override
   State<EspacosScreen> createState() => _EspacosScreenState();
@@ -76,6 +77,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
               title: const Text('Minhas Reservas'),
               onTap: () {
                 Navigator.pop(context);
+                
               },
             ),
             ListTile(
@@ -91,17 +93,33 @@ class _EspacosScreenState extends State<EspacosScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          children: const [
-            EspacoCard(nome: 'Quadra de Vôlei', icone: Icons.sports_volleyball),
-            EspacoCard(nome: 'Campo de Fut7', icone: Icons.sports_soccer),
-            EspacoCard(nome: 'Beach Tênis', icone: Icons.sports_tennis),
-            EspacoCard(nome: 'Ping Pong', icone: Icons.sports),
-            EspacoCard(nome: 'Piscina', icone: Icons.pool),
-            EspacoCard(nome: 'Ginásio', icone: Icons.sports_basketball),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                'lib/assets/images/banner.jpg', 
+                width: double.infinity,
+                height: 180,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: const [
+                  EspacoCard(nome: 'Quadra de Vôlei', icone: Icons.sports_volleyball),
+                  EspacoCard(nome: 'Campo de Fut7', icone: Icons.sports_soccer),
+                  EspacoCard(nome: 'Beach Tênis', icone: Icons.sports_tennis),
+                  EspacoCard(nome: 'Ping Pong', icone: Icons.sports),
+                  EspacoCard(nome: 'Piscina', icone: Icons.pool),
+                  EspacoCard(nome: 'Ginásio', icone: Icons.sports_basketball),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -121,7 +139,13 @@ class EspacoCard extends StatelessWidget {
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            '/agendamento',
+            arguments: nome,
+          );
+        },
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
