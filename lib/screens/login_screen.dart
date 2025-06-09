@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+
   }
 
   Future<void> login() async {
@@ -76,12 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 60),
+             const SizedBox(height: 60),
               Center(
-                child: Icon(
-                  Icons.event_available,
-                  size: 80,
-                  color: laranjaForte,
+                child: Image.asset(
+                  'assets/images/agendak3.png',
+                  height: 100,
                 ),
               ),
               const SizedBox(height: 16),
