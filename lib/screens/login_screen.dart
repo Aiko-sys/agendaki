@@ -76,10 +76,19 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
              const SizedBox(height: 60),
               Center(
                 child: Image.asset(
                   'assets/images/agendak3.png',
+=======
+              const SizedBox(height: 60),
+
+              // Logo no lugar do ícone
+              Center(
+                child: Image.asset(
+                  'lib/assets/images/agendak',
+>>>>>>> Stashed changes
 =======
               const SizedBox(height: 60),
 

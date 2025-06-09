@@ -27,8 +27,12 @@ flutter:
 
   assets:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     - lib/assets/images/agendak3.jpeg
 
+=======
+  - assets/images/agendak3.png
+>>>>>>> Stashed changes
 =======
   - assets/images/agendak3.png
 >>>>>>> Stashed changes
