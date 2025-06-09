@@ -7,12 +7,15 @@ class CadastroScreen extends StatefulWidget{
 
   @override
   State<CadastroScreen> createState() => _CadastroScreenState();
+  
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final List<String> _opcoes = ['Cliente', 'Organização'];
+  String? _selecOpcao;
 
   Future<void> salvarUsuario() async {
     if (nameController.text.isEmpty || emailController.text.isEmpty || passwordController.text.isEmpty) {
@@ -137,6 +140,35 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 16,),
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        labelText: 'Selecione seu perfil',
+                        labelStyle: TextStyle(color: laranjaForte),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: laranjaForte),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      value: _selecOpcao,
+                      items: _opcoes.map((option) {
+                        return DropdownMenuItem(
+                          value: option,
+                          child: Text(option),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selecOpcao = value;
+                        });
+                      },
+                      validator: (value) =>
+                          value == null ? 'Please select a fruit' : null,
+                    ),
+
                     const SizedBox(height: 24),
                     SizedBox(
                       width: double.infinity,
