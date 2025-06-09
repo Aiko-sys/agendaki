@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './../services/user_service.dart';
+
 import 'agendamento_screen.dart';
 
 final Color laranja = const Color(0xFFF67828);
@@ -14,6 +15,18 @@ class EspacosScreen extends StatefulWidget {
 
 class _EspacosScreenState extends State<EspacosScreen> {
   String? userName;
+  String filtroBusca = '';
+
+  final List<Map<String, dynamic>> espacos = [
+    {'nome': 'Quadra de Vôlei', 'icone': Icons.sports_volleyball},
+    {'nome': 'Campo de Fut7', 'icone': Icons.sports_soccer},
+    {'nome': 'Beach Tênis', 'icone': Icons.sports_tennis},
+    {'nome': 'Ping Pong', 'icone': Icons.sports},
+    {'nome': 'Piscina', 'icone': Icons.pool},
+    {'nome': 'futsal', 'icone': Icons.sports_basketball},
+    {'nome': 'vôlei de areia', 'icone': Icons.sports_volleyball_outlined},
+    {'nome': 'Pista de corrida', 'icone': Icons.sports_score_outlined},
+  ];
 
   @override
   void initState() {
@@ -32,6 +45,11 @@ class _EspacosScreenState extends State<EspacosScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final espacosFiltrados = espacos
+        .where((e) =>
+            e['nome'].toLowerCase().contains(filtroBusca.toLowerCase()))
+        .toList();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: laranja,
@@ -77,7 +95,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
               title: const Text('Minhas Reservas'),
               onTap: () {
                 Navigator.pop(context);
-                
+                Navigator.pushNamed(context, '/minhas-reservas');
               },
             ),
             ListTile(
@@ -95,21 +113,35 @@ class _EspacosScreenState extends State<EspacosScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Pesquisar espaço...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                ),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  filtroBusca = value;
+                });
+              },
+            ),
             const SizedBox(height: 16),
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
-                children: const [
-                  EspacoCard(nome: 'Quadra de Vôlei', icone: Icons.sports_volleyball),
-                  EspacoCard(nome: 'Campo de Fut7', icone: Icons.sports_soccer),
-                  EspacoCard(nome: 'Beach Tênis', icone: Icons.sports_tennis),
-                  EspacoCard(nome: 'Ping Pong', icone: Icons.sports),
-                  EspacoCard(nome: 'Piscina', icone: Icons.pool),
-                  EspacoCard(nome: 'Ginásio', icone: Icons.sports_basketball),
-                ],
+                children: espacosFiltrados.map((espaco) {
+                  return EspacoCard(
+                    nome: espaco['nome'],
+                    icone: espaco['icone'],
+                  );
+                }).toList(),
               ),
             ),
           ],
