@@ -95,15 +95,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                'lib/assets/images/banner.jpg', 
-                width: double.infinity,
-                height: 180,
-                fit: BoxFit.cover,
-              ),
-            ),
+            
             const SizedBox(height: 16),
             Expanded(
               child: GridView.count(
