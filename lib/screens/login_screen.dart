@@ -83,14 +83,12 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 60),
               Center(
                 child: Image.asset(
-                  'assets/images/agendak3.png', // Verifique se este é o caminho certo
-                  height: 100,
+                  'lib/assets/images/agendak3.png', // Verifique se este é o caminho certo
+                  height: 200,
                 ),
               ),
-              const SizedBox(height: 16),
               Text(
                 'agende sua arena com praticidade!',
                 textAlign: TextAlign.center,

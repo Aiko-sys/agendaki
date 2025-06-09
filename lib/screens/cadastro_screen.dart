@@ -54,7 +54,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
             const SizedBox(height: 60),
             Center(
               child: Image.asset(
-                  'assets/images/agendak3.png', // Verifique se este é o caminho certo
+                  'lib/assets/images/agendak3.png', // Verifique se este é o caminho certo
                   height: 100,
                 ),
               ),
