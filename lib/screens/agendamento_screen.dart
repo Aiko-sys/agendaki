@@ -1,159 +1,155 @@
 import 'package:flutter/material.dart';
 
 class AgendamentoScreen extends StatefulWidget {
-  const AgendamentoScreen({super.key});
+  final String nomeEspaco;
+
+  const AgendamentoScreen({Key? key, required this.nomeEspaco}) : super(key: key);
 
   @override
   State<AgendamentoScreen> createState() => _AgendamentoScreenState();
 }
 
 class _AgendamentoScreenState extends State<AgendamentoScreen> {
-  final String nomeUsuario = 'Valber Kaik';
-  final String espaco = 'Quadra de Vôlei';
-  final String logoPath = 'assets/images/logo_agendaki.png'; 
-
   final Color laranja = const Color(0xFFF67828);
-  final Color roxo = const Color(0xFF8E44AD);
+  final Color azul = const Color(0xFF2979FF);
 
   String? horarioSelecionado;
+  String quadraSelecionada = 'Quadra Laranja';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      logoPath,
-                      width: 48,
-                      height: 48,
-                      fit: BoxFit.contain,
+      appBar: AppBar(
+        title: Text('Agendar: ${widget.nomeEspaco}'),
+        backgroundColor: laranja,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/quadra.png',
+              height: 96,
+              width: 96,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Escolha a quadra e o horário para reservar o seu espaço.',
+              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: ['Quadra Laranja', 'Quadra Azul'].map((quadra) {
+                final selecionado = quadraSelecionada == quadra;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      quadraSelecionada = quadra;
+                      horarioSelecionado = null; // Limpa horário quando muda quadra
+                    });
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: selecionado ? azul : Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(color: selecionado ? azul : Colors.grey.shade400),
+                      boxShadow: selecionado
+                          ? [BoxShadow(color: azul.withOpacity(0.3), blurRadius: 8, offset: Offset(0, 4))]
+                          : [],
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    'Agendaki',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: laranja,
-                    ),
-                  ),
-                  const Spacer(),
-                  CircleAvatar(
-                    backgroundColor: roxo,
-                    child: const Icon(Icons.person, color: Colors.white),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: laranja.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.sports_volleyball, size: 60, color: laranja),
-                    const SizedBox(height: 16),
-                    Text(
-                      espaco,
+                    child: Text(
+                      quadra,
                       style: TextStyle(
-                        fontSize: 22,
+                        color: selecionado ? Colors.white : Colors.black87,
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey[800],
+                        fontSize: 16,
                       ),
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 32),
-              Text(
+                  ),
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 32),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
                 'Horários disponíveis',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey[700],
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.grey[800]),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Wrap(
+                  spacing: 16,
+                  runSpacing: 16,
+                  children: [
+                    '08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'
+                  ].map((horario) {
+                    final selecionado = horarioSelecionado == horario;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          horarioSelecionado = horario;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                        decoration: BoxDecoration(
+                          color: selecionado ? azul : Colors.white,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(color: selecionado ? azul : Colors.grey.shade400),
+                          boxShadow: selecionado
+                              ? [BoxShadow(color: azul.withOpacity(0.3), blurRadius: 8, offset: Offset(0, 4))]
+                              : [],
+                        ),
+                        child: Text(
+                          horario,
+                          style: TextStyle(
+                            color: selecionado ? Colors.white : Colors.black87,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
-              const SizedBox(height: 16),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  '08:00', '09:00', '10:00', '11:00', '12:00', '13:00'
-                ].map((horario) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        horarioSelecionado = horario;
-                      });
-                    },
-                    child: horarioButton(
-                      horario,
-                      selecionado: horarioSelecionado == horario,
-                    ),
-                  );
-                }).toList(),
-              ),
-              const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: laranja,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                  ),
-                  onPressed: horarioSelecionado == null
-                      ? null
-                      : () {
-                          // fzr a lógica de agendamento
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                  'Reservado para $horarioSelecionado na $espaco'),
-                            ),
-                          );
-                        },
-                  child: const Text(
-                    'Reservar',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget horarioButton(String texto, {bool selecionado = false}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      decoration: BoxDecoration(
-        color: selecionado ? roxo : Colors.white,
-        border: Border.all(color: selecionado ? roxo : Colors.grey.shade400),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Text(
-        texto,
-        style: TextStyle(
-          color: selecionado ? Colors.white : Colors.black87,
-          fontWeight: FontWeight.w500,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: SizedBox(
+          height: 56,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: laranja,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+            ),
+            onPressed: horarioSelecionado == null
+                ? null
+                : () {
+                    final msg =
+                        'Reservado ${widget.nomeEspaco} - $quadraSelecionada para o horário $horarioSelecionado';
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(msg)),
+                    );
+                  },
+            child: const Text(
+              'Reservar',
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+          ),
         ),
       ),
     );
