@@ -7,12 +7,15 @@ class CadastroScreen extends StatefulWidget{
 
   @override
   State<CadastroScreen> createState() => _CadastroScreenState();
+  
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final List<String> _opcoes = ['Cliente', 'Organização'];
+  String? _selecOpcao;
 
   Future<void> salvarUsuario() async {
     if (nameController.text.isEmpty || emailController.text.isEmpty || passwordController.text.isEmpty) {
@@ -44,6 +47,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     final Color laranjaForte = const Color(0xFFF67828);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -51,7 +55,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
             const SizedBox(height: 60),
             Center(
               child: Image.asset(
-                  'assets/images/agendak3.png', // Verifique se este é o caminho certo
+                  'lib/assets/images/agendak3.png', // Verifique se este é o caminho certo
                   height: 100,
                 ),
               ),
@@ -91,7 +95,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     const SizedBox(height: 24),
+
                     TextFormField(
                       controller: nameController,
                       decoration: InputDecoration(
@@ -106,7 +112,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+                    
                     const SizedBox(height: 16),
+
                     TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(
@@ -121,7 +129,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 16),
+
                     TextFormField(
                       controller: passwordController,
                       obscureText: true,
@@ -137,7 +147,39 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+
+                    const SizedBox(height: 16,),
+
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        labelText: 'Selecione seu perfil',
+                        labelStyle: TextStyle(color: laranjaForte),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: laranjaForte),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      value: _selecOpcao,
+                      items: _opcoes.map((option) {
+                        return DropdownMenuItem(
+                          value: option,
+                          child: Text(option),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selecOpcao = value;
+                        });
+                      },
+                      validator: (value) =>
+                          value == null ? 'Please select a fruit' : null,
+                    ),
+
                     const SizedBox(height: 24),
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -160,7 +202,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 15),
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
