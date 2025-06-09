@@ -75,13 +75,23 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+<<<<<<< Updated upstream
              const SizedBox(height: 60),
               Center(
                 child: Image.asset(
                   'assets/images/agendak3.png',
+=======
+              const SizedBox(height: 60),
+
+              // Logo no lugar do ícone
+              Center(
+                child: Image.asset(
+                  'lib/assets/images/agendak',
+>>>>>>> Stashed changes
                   height: 100,
                 ),
               ),
+
               const SizedBox(height: 16),
               Text(
                 'agende sua arena com praticidade!',
@@ -92,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 60),
+
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
