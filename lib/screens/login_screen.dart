@@ -33,9 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
 
-      // Verifique se o usuário realmente existe
       if (userCredential.user != null) {
-        // Login OK - navega para a próxima tela
         Navigator.pushReplacementNamed(context, AppRoutes.espacos);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
