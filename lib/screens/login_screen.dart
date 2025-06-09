@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Text(
-                'agende sua arena com praticidade!',
+                'Agende sua Arena com Praticidade!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
