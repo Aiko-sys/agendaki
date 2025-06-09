@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'agende sua arena com praticidade!',
+                'Agende sua Arena com Praticidade!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,

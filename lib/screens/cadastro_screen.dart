@@ -47,6 +47,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     final Color laranjaForte = const Color(0xFFF67828);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -96,7 +97,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                     ),
 
                     const SizedBox(height: 24),
-                    
+
                     TextFormField(
                       controller: nameController,
                       decoration: InputDecoration(
