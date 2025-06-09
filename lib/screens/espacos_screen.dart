@@ -21,7 +21,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
   }
 
   void loadUser() async {
-    final data = await UserService.carregarDadosUsuario();
+    final data = await UserService.loadUserData();
     if (data != null) {
       setState(() {
         userName = data['name'];
