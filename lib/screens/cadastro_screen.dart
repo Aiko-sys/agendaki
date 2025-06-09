@@ -44,11 +44,28 @@ class _CadastroScreenState extends State<CadastroScreen> {
     final Color laranjaForte = const Color(0xFFF67828);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Cadastro de Usuário')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            const SizedBox(height: 60),
+            Center(
+              child: Image.asset(
+                  'assets/images/agendak3.png', // Verifique se este é o caminho certo
+                  height: 100,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Agende sua Arena com Praticidade!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                ),
+              ),
+              const SizedBox(height: 60),
+
             Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
@@ -67,7 +84,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Cadastro',
+                      'Cadastre-se já!',
                       style: TextStyle(
                         color: laranjaForte,
                         fontSize: 28,
@@ -109,7 +126,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                       controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'password',
+                        labelText: 'Senha',
                         labelStyle: TextStyle(color: laranjaForte),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -136,6 +153,29 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                         child: const Text(
                           'Cadastrar',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, AppRoutes.login);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: laranjaForte,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text(
+                          'Cancelar',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
