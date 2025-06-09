@@ -94,7 +94,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     const SizedBox(height: 24),
+                    
                     TextFormField(
                       controller: nameController,
                       decoration: InputDecoration(
@@ -109,7 +111,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+                    
                     const SizedBox(height: 16),
+
                     TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(
@@ -124,7 +128,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 16),
+
                     TextFormField(
                       controller: passwordController,
                       obscureText: true,
@@ -140,7 +146,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 16,),
+
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         labelText: 'Selecione seu perfil',
@@ -170,6 +178,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                     ),
 
                     const SizedBox(height: 24),
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -192,7 +201,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 15),
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
