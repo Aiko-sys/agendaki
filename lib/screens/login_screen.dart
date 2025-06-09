@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatefulWidget{
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
@@ -10,8 +10,6 @@ class LoginScreen extends StatefulWidget{
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -22,16 +20,26 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-
   }
 
   Future<void> login() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha todos os campos')),
+      );
+      return;
+    }
+
     setState(() {
       isLoading = true;
     });
-      try {
+
+    try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+          .signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
 
       if (userCredential.user != null) {
         Navigator.pushReplacementNamed(context, AppRoutes.espacos);
@@ -46,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (e.code == 'user-not-found') {
         mensagemErro = 'Usuário não encontrado.';
       } else if (e.code == 'wrong-password' || e.code == 'invalid-email') {
-        mensagemErro = 'Email ou Senha inválidos';
+        mensagemErro = 'Email ou senha inválidos.';
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -75,32 +83,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-             const SizedBox(height: 60),
-              Center(
-                child: Image.asset(
-                  'assets/images/agendak3.png',
-=======
               const SizedBox(height: 60),
-
-              // Logo no lugar do ícone
               Center(
                 child: Image.asset(
-                  'lib/assets/images/agendak',
->>>>>>> Stashed changes
-=======
-              const SizedBox(height: 60),
-
-              // Logo no lugar do ícone
-              Center(
-                child: Image.asset(
-                  'lib/assets/images/agendak',
->>>>>>> Stashed changes
+                  'assets/images/agendak3.png', // Verifique se este é o caminho certo
                   height: 100,
                 ),
               ),
-
               const SizedBox(height: 16),
               Text(
                 'agende sua arena com praticidade!',
@@ -157,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'password',
+                        labelText: 'Senha',
                         labelStyle: TextStyle(color: laranjaForte),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -171,30 +160,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 24),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: login,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: laranjaForte,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: const Text(
-                          'Entrar',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                      child: isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : ElevatedButton(
+                              onPressed: login,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: laranjaForte,
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: const Text(
+                                'Entrar',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                     ),
                     const SizedBox(height: 15),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, AppRoutes.espacos);
+                          Navigator.pushNamed(context, AppRoutes.cadastro);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: laranjaForte,

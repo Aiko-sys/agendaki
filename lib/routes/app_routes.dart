@@ -9,6 +9,8 @@ class AppRoutes {
   static const String login = '/login';
   static const String espacos = '/espacos';
 
+  static String cadastro;
+
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       login: (context) => const LoginScreen(),
