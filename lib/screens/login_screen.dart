@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatefulWidget{
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
@@ -10,8 +10,6 @@ class LoginScreen extends StatefulWidget{
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -25,12 +23,23 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> login() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha todos os campos')),
+      );
+      return;
+    }
+
     setState(() {
       isLoading = true;
     });
-      try {
+
+    try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+          .signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
 
       if (userCredential.user != null) {
         Navigator.pushReplacementNamed(context, AppRoutes.espacos);
@@ -45,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (e.code == 'user-not-found') {
         mensagemErro = 'Usuário não encontrado.';
       } else if (e.code == 'wrong-password' || e.code == 'invalid-email') {
-        mensagemErro = 'Email ou Senha inválidos';
+        mensagemErro = 'Email ou senha inválidos.';
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -76,10 +85,9 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const SizedBox(height: 60),
               Center(
-                child: Icon(
-                  Icons.event_available,
-                  size: 80,
-                  color: laranjaForte,
+                child: Image.asset(
+                  'assets/images/agendak3.png', // Verifique se este é o caminho certo
+                  height: 100,
                 ),
               ),
               const SizedBox(height: 16),
@@ -92,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 60),
+
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
@@ -137,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'password',
+                        labelText: 'Senha',
                         labelStyle: TextStyle(color: laranjaForte),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -151,30 +160,36 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 24),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: login,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: laranjaForte,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: const Text(
-                          'Entrar',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                      child: isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : ElevatedButton(
+                              onPressed: login,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: laranjaForte,
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: const Text(
+                                'Entrar',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                     ),
                     const SizedBox(height: 15),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
+<<<<<<< HEAD
                           Navigator.pushReplacementNamed(context, AppRoutes.cadastro);
+=======
+                          // Navigator.pushNamed(context, AppRoutes.cadastro);
+>>>>>>> 3a426380960268fa308b872c80b49e0f41429fb4
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: laranjaForte,

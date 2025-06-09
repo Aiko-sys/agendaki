@@ -11,6 +11,8 @@ class AppRoutes {
   static const String espacos = '/espacos';
   static const String cadastro = '/cadastro';
 
+
+
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       login: (context) => const LoginScreen(),
