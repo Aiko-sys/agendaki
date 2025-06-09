@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../routes/app_routes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CadastroScreen extends StatefulWidget{
@@ -66,7 +67,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Login',
+                      'Cadastro',
                       style: TextStyle(
                         color: laranjaForte,
                         fontSize: 28,
@@ -124,7 +125,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator.pushReplacementNamed(context, AppRoutes.espacos);
+                          Navigator.pushReplacementNamed(context, AppRoutes.login);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: laranjaForte,
