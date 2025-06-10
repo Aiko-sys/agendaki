@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './../services/user_service.dart';
 
-import 'agendamento_screen.dart';
-
 final Color laranja = const Color(0xFFF67828);
 
 class EspacosScreen extends StatefulWidget {
@@ -23,9 +21,9 @@ class _EspacosScreenState extends State<EspacosScreen> {
     {'nome': 'Beach Tênis', 'icone': Icons.sports_tennis},
     {'nome': 'Ping Pong', 'icone': Icons.sports},
     {'nome': 'Piscina', 'icone': Icons.pool},
-    {'nome': 'futsal', 'icone': Icons.sports_basketball},
-    {'nome': 'vôlei de areia', 'icone': Icons.sports_volleyball_outlined},
-    {'nome': 'Pista de corrida', 'icone': Icons.sports_score_outlined},
+    {'nome': 'Futsal', 'icone': Icons.sports_basketball},
+    {'nome': 'Vôlei de Areia', 'icone': Icons.sports_volleyball_outlined},
+    {'nome': 'Pista de Corrida', 'icone': Icons.directions_run},
   ];
 
   @override
@@ -75,7 +73,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
                   const Icon(Icons.account_circle, size: 60, color: Colors.white),
                   const SizedBox(height: 8),
                   Text(
-                    '$userName',
+                    userName ?? 'Usuário',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -91,12 +89,32 @@ class _EspacosScreenState extends State<EspacosScreen> {
               onTap: () => Navigator.pop(context),
             ),
             ListTile(
+              leading: const Icon(Icons.add_circle_outline),
+              title: const Text('Adicionar espaços'),
+              onTap: () async {
+                Navigator.pop(context);
+                final novoEspaco = await Navigator.pushNamed(
+                  context,
+                  '/adicionar-espaco',
+                );
+                if (novoEspaco != null && mounted) {
+                  setState(() {
+                    espacos.add(novoEspaco as Map<String, dynamic>);
+                  });
+                }
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.event_note),
               title: const Text('Minhas Reservas'),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/minhas-reservas');
               },
+            ),
+            ListTile(
+              leading: const Icon(Icons.account_circle_rounded),
+              title: const Text('Meu perfil'),
             ),
             ListTile(
               leading: const Icon(Icons.logout),
