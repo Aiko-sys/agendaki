@@ -73,7 +73,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
                   const Icon(Icons.account_circle, size: 60, color: Colors.white),
                   const SizedBox(height: 8),
                   Text(
-                    userName ?? 'Usuário',
+                    userName ?? 'Usuários',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -102,6 +102,14 @@ class _EspacosScreenState extends State<EspacosScreen> {
                     espacos.add(novoEspaco as Map<String, dynamic>);
                   });
                 }
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.supervised_user_circle_sharp),
+              title: const Text('ver usuarios'),
+              onTap: (){
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/usuarios');
               },
             ),
             ListTile(
