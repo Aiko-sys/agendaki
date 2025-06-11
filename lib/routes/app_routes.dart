@@ -29,11 +29,9 @@ class AppRoutes {
 
       // perfilUsuario: (context) => const PerfilUsuarioScreen(usuario: Usuario.new(email: 'email@email.com', nome: 'User', tipo: 'Cliente'), agendamentos: [Agendamento.new],),
 
-<<<<<<< HEAD
+
       espacos: (context) => AuthGuard(child: const EspacosScreen()),
 
-=======
->>>>>>> b57965d65eefe78cfbcabcfcb94249ac8d8ae491
       agendamento: (context) {
         final args = ModalRoute.of(context)!.settings.arguments;
         if (args is String) {
@@ -51,12 +49,12 @@ class AppRoutes {
       adicionarEspaco: (context) =>
           AuthGuard(child: const AdicionarEspacoScreen()),
 
-<<<<<<< HEAD
+
       // perfilUsuario: (context) => 
       //   AuthGuard(child: const PerfilUsuarioScreen(usuario: Usuario.new(email: ), agendamentos: 'agendamentos'))
-=======
+
       usuarios: (context) => AuthGuard(child: UsersScreen()), // 
->>>>>>> b57965d65eefe78cfbcabcfcb94249ac8d8ae491
+
     };
   }
 }
