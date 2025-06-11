@@ -16,7 +16,7 @@ class MinhasReservasScreen extends StatelessWidget {
       'espaco': 'Piscina',
       'data': '13/06/2025',
       'hora': '14:00 - 15:00',
-      'status': 'cancelado',
+      'status': 'Cancelado',
     },
     {
       'espaco': 'Ping Pong',
