@@ -128,6 +128,10 @@ class _EspacosScreenState extends State<EspacosScreen> {
               title: const Text('Meu perfil'),
             ),
             ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Configurações'),
+            ),
+            ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Sair'),
               onTap: () async {

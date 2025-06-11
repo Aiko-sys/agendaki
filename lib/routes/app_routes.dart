@@ -27,6 +27,12 @@ class AppRoutes {
 
       cadastro: (context) => const CadastroScreen(),
 
+<<<<<<< HEAD
+=======
+      // perfilUsuario: (context) => const PerfilUsuarioScreen(usuario: Usuario.new(email: 'email@email.com', nome: 'User', tipo: 'Cliente'), agendamentos: [Agendamento.new],),
+
+
+>>>>>>> 746731937c23f73041631e9470c345194d958b19
       espacos: (context) => AuthGuard(child: const EspacosScreen()),
 
       agendamento: (context) {
@@ -46,6 +52,10 @@ class AppRoutes {
       adicionarEspaco: (context) =>
           AuthGuard(child: const AdicionarEspacoScreen()),
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 746731937c23f73041631e9470c345194d958b19
       // perfilUsuario: (context) => 
       //   AuthGuard(child: const PerfilUsuarioScreen(usuario: Usuario.new(email: ), agendamentos: 'agendamentos'))
 
