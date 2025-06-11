@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import './../services/user_service.dart';
+import '../services/user_service.dart';
 
 final Color laranja = const Color(0xFFF67828);
 
@@ -20,7 +20,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
     {'nome': 'Campo de Fut7', 'icone': Icons.sports_soccer},
     {'nome': 'Beach Tênis', 'icone': Icons.sports_tennis},
     {'nome': 'Ping Pong', 'icone': Icons.sports},
-    {'nome': 'Piscina', 'icone': Icons.pool},
+    {'nome': 'Deck', 'icone': Icons.pool},
     {'nome': 'Futsal', 'icone': Icons.sports_basketball},
     {'nome': 'Vôlei de Areia', 'icone': Icons.sports_volleyball_outlined},
     {'nome': 'Pista de Corrida', 'icone': Icons.directions_run},
@@ -52,9 +52,9 @@ class _EspacosScreenState extends State<EspacosScreen> {
       appBar: AppBar(
         backgroundColor: laranja,
         centerTitle: true,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white,
-          ),
+        ),
         title: const Text(
           'Agendaki',
           style: TextStyle(
@@ -76,7 +76,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
                   const Icon(Icons.account_circle, size: 60, color: Colors.white),
                   const SizedBox(height: 8),
                   Text(
-                    userName ?? 'Usuários',
+                    userName ?? 'Usuário',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -110,7 +110,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
             ListTile(
               leading: const Icon(Icons.supervised_user_circle_sharp),
               title: const Text('Ver Usuários'),
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/usuarios');
               },
@@ -126,10 +126,18 @@ class _EspacosScreenState extends State<EspacosScreen> {
             ListTile(
               leading: const Icon(Icons.account_circle_rounded),
               title: const Text('Meu perfil'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/perfil');
+              },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Configurações'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/config');
+              },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
