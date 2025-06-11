@@ -45,6 +45,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              
               children: [
                 
                 Text(
@@ -54,7 +55,7 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                 Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Datas disponíveis',
@@ -62,25 +63,31 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-
-                TableCalendar(
-                  firstDay: DateTime.utc(2025, 1, 1),
-                  lastDay: DateTime.utc(2030, 12, 31),
-                  focusedDay: _focusedDay,
-                  selectedDayPredicate: (day) {
-                    return isSameDay(_selectedDay, day);
-                  },
-                  onDaySelected: (selectedDay, focusedDay) {
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                    });
-                  },
+                
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Center(
+                      child: TableCalendar(
+                        firstDay: DateTime.utc(2025, 1, 1),
+                        lastDay: DateTime.utc(2030, 12, 31),
+                        focusedDay: _focusedDay,
+                        selectedDayPredicate: (day) {
+                          return isSameDay(_selectedDay, day);
+                        },
+                        onDaySelected: (selectedDay, focusedDay) {
+                          setState(() {
+                            _selectedDay = selectedDay;
+                            _focusedDay = focusedDay;
+                          });
+                        },
+                      ),
+                    ) 
+                  )
                 ),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
 
-               
+
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
