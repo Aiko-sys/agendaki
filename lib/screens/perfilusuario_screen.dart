@@ -1,34 +1,8 @@
 import 'package:flutter/material.dart';
+import './../models/agendamento.dart';
+import './../models/usuario.dart';
 
 final Color laranja = const Color(0xFFF67828);
-
-class Usuario {
-  final String id;
-  final String nome;
-  final String email;
-  final String tipo;
-
-  Usuario({
-    required this.id,
-    required this.nome,
-    required this.email,
-    required this.tipo,
-  });
-}
-
-class Agendamento {
-  final String id;
-  final String espacoNome;
-  final DateTime dataHora;
-  final String status;
-
-  Agendamento({
-    required this.id,
-    required this.espacoNome,
-    required this.dataHora,
-    required this.status,
-  });
-}
 
 class PerfilUsuarioScreen extends StatelessWidget {
   final Usuario usuario;

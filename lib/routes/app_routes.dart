@@ -7,6 +7,8 @@ import '../screens/mi_reservas.dart';
 import '../screens/add_espacos_screen.dart';
 import '../screens/perfilusuario_screen.dart';
 import './../widgets/auth_guard.dart';
+import './../models/agendamento.dart';
+import './../models/usuario.dart';
 
 class AppRoutes {
   static const String login = '/login';
@@ -23,9 +25,9 @@ class AppRoutes {
 
       cadastro: (context) => const CadastroScreen(),
 
-      espacos: (context) => AuthGuard(child: const EspacosScreen()),
+      // perfilUsuario: (context) => const PerfilUsuarioScreen(usuario: Usuario.new(email: 'email@email.com', nome: 'User', tipo: 'Cliente'), agendamentos: [Agendamento.new],),
 
-      
+      espacos: (context) => AuthGuard(child: const EspacosScreen()),
 
       agendamento: (context) {
         final args = ModalRoute.of(context)!.settings.arguments;
@@ -43,6 +45,9 @@ class AppRoutes {
 
       adicionarEspaco: (context) =>
           AuthGuard(child: const AdicionarEspacoScreen()),
+
+      // perfilUsuario: (context) => 
+      //   AuthGuard(child: const PerfilUsuarioScreen(usuario: Usuario.new(email: ), agendamentos: 'agendamentos'))
     };
   }
 }
