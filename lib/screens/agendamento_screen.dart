@@ -22,7 +22,17 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agendar: ${widget.nomeEspaco}'),
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Colors.white, 
+          ),
+        title: Text('Agendar: ${widget.nomeEspaco}',
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.white,
+            )
+         ),
         backgroundColor: laranja,
       ),
       body: LayoutBuilder(

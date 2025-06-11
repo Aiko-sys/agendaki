@@ -52,6 +52,9 @@ class _EspacosScreenState extends State<EspacosScreen> {
       appBar: AppBar(
         backgroundColor: laranja,
         centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+          ),
         title: const Text(
           'Agendaki',
           style: TextStyle(
@@ -106,7 +109,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.supervised_user_circle_sharp),
-              title: const Text('ver usuarios'),
+              title: const Text('Ver Usuários'),
               onTap: (){
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/usuarios');

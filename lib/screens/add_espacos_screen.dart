@@ -77,7 +77,11 @@ class _AdicionarEspacoScreenState extends State<AdicionarEspacoScreen> {
         backgroundColor: laranja,
         title: const Text(
           'Adicionar Espaço',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            ),
         ),
         centerTitle: true,
         elevation: 2,

@@ -47,6 +47,7 @@ class UsersScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: laranja,
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -55,7 +56,11 @@ class UsersScreen extends StatelessWidget {
         ),
         title: const Text(
           'Usuários',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            ),
         ),
       ),
       body: ListView.builder(
