@@ -6,6 +6,7 @@ import '../screens/agendamento_screen.dart';
 import '../screens/mi_reservas.dart';
 import '../screens/add_espacos_screen.dart';
 import '../screens/perfilusuario_screen.dart';
+import '../screens/users_screen.dart'; 
 import './../widgets/auth_guard.dart';
 
 class AppRoutes {
@@ -16,6 +17,7 @@ class AppRoutes {
   static const String minhasReservas = '/minhas-reservas';
   static const String adicionarEspaco = '/adicionar-espaco';
   static const String perfilUsuario = '/perfilusuario';
+  static const String usuarios = '/usuarios'; 
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -24,8 +26,6 @@ class AppRoutes {
       cadastro: (context) => const CadastroScreen(),
 
       espacos: (context) => AuthGuard(child: const EspacosScreen()),
-
-      
 
       agendamento: (context) {
         final args = ModalRoute.of(context)!.settings.arguments;
@@ -43,6 +43,8 @@ class AppRoutes {
 
       adicionarEspaco: (context) =>
           AuthGuard(child: const AdicionarEspacoScreen()),
+
+      usuarios: (context) => AuthGuard(child: UsersScreen()), // 
     };
   }
 }
