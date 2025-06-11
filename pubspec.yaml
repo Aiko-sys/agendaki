@@ -16,6 +16,7 @@ dependencies:
   cloud_firestore: ^5.6.8
   flutter_dotenv: ^5.0.2
   firebase_auth: ^5.5.4
+  table_calendar: ^3.2.0
 
   
   carousel_slider: ^4.2.1

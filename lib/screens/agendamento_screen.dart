@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+
 
 class AgendamentoScreen extends StatefulWidget {
   final String nomeEspaco;
@@ -12,6 +14,8 @@ class AgendamentoScreen extends StatefulWidget {
 class _AgendamentoScreenState extends State<AgendamentoScreen> {
   final Color laranja = const Color(0xFFF67828);
   final Color azul = const Color(0xFF2979FF);
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
 
   String? horarioSelecionado;
   String quadraSelecionada = 'Quadra Laranja';
@@ -50,41 +54,28 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 16,
-                  runSpacing: 16,
-                  children: ['Quadra Laranja', 'Quadra Azul'].map((quadra) {
-                    final selecionado = quadraSelecionada == quadra;
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          quadraSelecionada = quadra;
-                          horarioSelecionado = null;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                        decoration: BoxDecoration(
-                          color: selecionado ? azul : Colors.white,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: selecionado ? azul : Colors.grey.shade400),
-                          boxShadow: selecionado
-                              ? [BoxShadow(color: azul.withOpacity(0.3), blurRadius: 8, offset: Offset(0, 4))]
-                              : [],
-                        ),
-                        child: Text(
-                          quadra,
-                          style: TextStyle(
-                            color: selecionado ? Colors.white : Colors.black87,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                 Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Datas disponíveis',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.grey[800]),
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                TableCalendar(
+                  firstDay: DateTime.utc(2025, 1, 1),
+                  lastDay: DateTime.utc(2030, 12, 31),
+                  focusedDay: _focusedDay,
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                    });
+                  },
                 ),
 
                 const SizedBox(height: 32),
@@ -118,6 +109,8 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                                 horarioSelecionado = horario;
                               });
                             },
+
+
                             child: Container(
                               width: screenWidth < 400 ? 100 : 120,
                               padding: const EdgeInsets.symmetric(vertical: 14),
@@ -139,6 +132,8 @@ class _AgendamentoScreenState extends State<AgendamentoScreen> {
                                 ),
                               ),
                             ),
+
+
                           );
                         }).toList(),
                       ),
