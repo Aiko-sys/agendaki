@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'usuario_detalhes_screen.dart'; 
 
 final Color laranja = const Color(0xFFF67828);
 
@@ -60,7 +61,7 @@ class UsersScreen extends StatelessWidget {
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 24,
-            ),
+          ),
         ),
       ),
       body: ListView.builder(
@@ -90,6 +91,14 @@ class UsersScreen extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UsuarioDetalhesScreen(usuario: usuario),
+                  ),
+                );
+              },
             ),
           );
         },
