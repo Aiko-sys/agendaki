@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import './../services/appointment_service.dart';
 
 final Color laranja = const Color(0xFFF67828);
 
@@ -33,6 +34,7 @@ class _MinhasReservasScreenState extends State<MinhasReservasScreen> {
 
     for (var doc in snapshot.docs) {
       final data = doc.data();
+      data['id'] = doc.id;
 
       // Busca nome do espaço
       final spaceSnapshot = await FirebaseFirestore.instance
@@ -52,6 +54,7 @@ class _MinhasReservasScreenState extends State<MinhasReservasScreen> {
           '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')} - ${date.add(Duration(hours: 1)).hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
 
       reservas.add({
+        'id': data['id'],
         'espaco': nomeEspaco,
         'data': dataFormatada,
         'hora': horaFormatada,
@@ -163,9 +166,56 @@ class _MinhasReservasScreenState extends State<MinhasReservasScreen> {
                                 color: statusColor,
                                 fontWeight: FontWeight.bold),
                           ),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: TextButton(
+                              onPressed: () async {
+                                final bool? confirm = await showDialog<bool>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Confirmação'),
+                                    content: const Text('Tem certeza que quer cancelar?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.of(context).pop(false),
+                                        child: const Text('Não'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.of(context).pop(true),
+                                        child: const Text('Sim'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+
+                                if (confirm == true) {
+                                  AppointmentService.deleteAppointment(reserva['id']);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Reserva cancelada.')),
+                                  );
+                                  setState(() {
+                                    _reservasFuturo = buscarReservas();
+                                  });
+                                }
+
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.red,
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.cancel),
+                                  const Text('Cancelar'),
+                                ],
+                              ),
+                          ),
+                          )
                         ],
+                        
                       ),
+                      
                     ],
+                    
                   ),
                 ),
               );

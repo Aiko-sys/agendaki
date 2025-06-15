@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/user_service.dart';
 
 final Color laranja = const Color(0xFFF67828);
@@ -13,18 +14,8 @@ class EspacosScreen extends StatefulWidget {
 
 class _EspacosScreenState extends State<EspacosScreen> {
   String? userName;
+  String? userType;
   String filtroBusca = '';
-
-  final List<Map<String, dynamic>> espacos = [
-    {'nome': 'Quadra de Vôlei', 'icone': Icons.sports_volleyball},
-    {'nome': 'Campo de Fut7', 'icone': Icons.sports_soccer},
-    {'nome': 'Beach Tênis', 'icone': Icons.sports_tennis},
-    {'nome': 'Ping Pong', 'icone': Icons.sports},
-    {'nome': 'Deck', 'icone': Icons.pool},
-    {'nome': 'Futsal', 'icone': Icons.sports_basketball},
-    {'nome': 'Vôlei de Areia', 'icone': Icons.sports_volleyball_outlined},
-    {'nome': 'Pista de Corrida', 'icone': Icons.directions_run},
-  ];
 
   @override
   void initState() {
@@ -37,24 +28,43 @@ class _EspacosScreenState extends State<EspacosScreen> {
     if (data != null) {
       setState(() {
         userName = data['name'];
+        userType = data['type'];
       });
     }
   }
 
+  Future<List<Map<String, dynamic>>> carregarEspacos() async {
+    final snapshot = await FirebaseFirestore.instance.collection('spaces').get();
+    return snapshot.docs.map((doc) {
+      final data = doc.data();
+      return {
+        'space_id': doc.id,
+        'nome': data['name'] ?? 'Sem nome',
+        'icone': _iconePorNome(data['name'] ?? ''), // ícone dinâmico por nome
+      };
+    }).toList();
+  }
+
+  IconData _iconePorNome(String nome) {
+    final nomeLower = nome.toLowerCase();
+    if (nomeLower.contains('vôlei')) return Icons.sports_volleyball;
+    if (nomeLower.contains('fut')) return Icons.sports_soccer;
+    if (nomeLower.contains('tênis')) return Icons.sports_tennis;
+    if (nomeLower.contains('ping') || nomeLower.contains('pong')) return Icons.sports;
+    if (nomeLower.contains('deck')) return Icons.pool;
+    if (nomeLower.contains('basquete')) return Icons.sports_basketball;
+    if (nomeLower.contains('areia')) return Icons.sports_volleyball_outlined;
+    if (nomeLower.contains('pista')) return Icons.directions_run;
+    return Icons.sports; // padrão
+  }
+
   @override
   Widget build(BuildContext context) {
-    final espacosFiltrados = espacos
-        .where((e) =>
-            e['nome'].toLowerCase().contains(filtroBusca.toLowerCase()))
-        .toList();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: laranja,
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-        ),
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           'Agendaki',
           style: TextStyle(
@@ -83,6 +93,14 @@ class _EspacosScreenState extends State<EspacosScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  Text(
+                    'Tipo: $userType' ?? 'Tipo: Sem Informação',
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -91,19 +109,18 @@ class _EspacosScreenState extends State<EspacosScreen> {
               title: const Text('Início'),
               onTap: () => Navigator.pop(context),
             ),
+            if (userType == 'Organização')
             ListTile(
               leading: const Icon(Icons.add_circle_outline),
-              title: const Text('Adicionar espaços'),
+              title: const Text('Meus espaços'),
               onTap: () async {
                 Navigator.pop(context);
                 final novoEspaco = await Navigator.pushNamed(
                   context,
-                  '/adicionar-espaco',
+                  '/meus-espacos',
                 );
                 if (novoEspaco != null && mounted) {
-                  setState(() {
-                    espacos.add(novoEspaco as Map<String, dynamic>);
-                  });
+                  setState(() {}); // recarrega os dados
                 }
               },
             ),
@@ -173,16 +190,37 @@ class _EspacosScreenState extends State<EspacosScreen> {
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                children: espacosFiltrados.map((espaco) {
-                  return EspacoCard(
-                    nome: espaco['nome'],
-                    icone: espaco['icone'],
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: carregarEspacos(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Erro ao carregar espaços.'));
+                  }
+
+                  final espacos = snapshot.data ?? [];
+
+                  final espacosFiltrados = espacos.where((espaco) {
+                    return espaco['nome']
+                        .toLowerCase()
+                        .contains(filtroBusca.toLowerCase());
+                  }).toList();
+
+                  return GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    children: espacosFiltrados.map((espaco) {
+                      return EspacoCard(
+                        nome: espaco['nome'],
+                        icone: espaco['icone'],
+                        id: espaco['space_id'],
+                      );
+                    }).toList(),
                   );
-                }).toList(),
+                },
               ),
             ),
           ],
@@ -194,9 +232,10 @@ class _EspacosScreenState extends State<EspacosScreen> {
 
 class EspacoCard extends StatelessWidget {
   final String nome;
+  final String id;
   final IconData icone;
 
-  const EspacoCard({super.key, required this.nome, required this.icone});
+  const EspacoCard({super.key, required this.nome, required this.icone, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +247,7 @@ class EspacoCard extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/agendamento',
-            arguments: nome,
+            arguments: [nome, id]
           );
         },
         child: Center(

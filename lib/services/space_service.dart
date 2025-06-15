@@ -5,7 +5,6 @@ class SpaceService {
 
   static Future<String> createSpace(Map<String, dynamic> data) async {
     final docRef = await _collection.add(data);
-    await docRef.update({'id': docRef.id}); 
     return docRef.id;
   }
 

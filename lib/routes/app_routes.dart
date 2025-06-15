@@ -1,3 +1,4 @@
+import 'package:agendaki/screens/meus_espacos_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/login_screen.dart';
 import '../screens/espacos_screen.dart';
@@ -17,6 +18,7 @@ class AppRoutes {
   static const String agendamento = '/agendamento';
   static const String minhasReservas = '/minhas-reservas';
   static const String adicionarEspaco = '/adicionar-espaco';
+  static const String seusEspacos = '/meus-espacos';
   static const String perfilUsuario = '/perfil';
   static const String usuarios = '/usuarios';
   static const String configuracoes = '/config';
@@ -28,8 +30,9 @@ class AppRoutes {
       espacos: (context) => AuthGuard(child: const EspacosScreen()),
       agendamento: (context) {
         final args = ModalRoute.of(context)!.settings.arguments;
-        if (args is String) {
-          return AgendamentoScreen(nomeEspaco: args);
+        if (args is List<String> && args.length >= 2) {
+          return AgendamentoScreen(nomeEspaco: args[0], idEspaco: args[1]);
+          
         } else {
           return const Scaffold(
             body: Center(child: Text('Nenhum espaço selecionado')),
@@ -38,6 +41,8 @@ class AppRoutes {
       },
       minhasReservas: (context) =>
           AuthGuard(child: const MinhasReservasScreen()),
+      seusEspacos: (context) =>
+        AuthGuard(child: const MeusEspacosScreen()),
       adicionarEspaco: (context) =>
           AuthGuard(child: const AdicionarEspacoScreen()),
       // perfilUsuario: (context) =>
