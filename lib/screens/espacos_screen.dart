@@ -124,9 +124,10 @@ class _EspacosScreenState extends State<EspacosScreen> {
                 }
               },
             ),
+            if (userType == 'Organização')
             ListTile(
               leading: const Icon(Icons.supervised_user_circle_sharp),
-              title: const Text('Ver Usuários'),
+              title: const Text('Ver clientes'),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/usuarios');

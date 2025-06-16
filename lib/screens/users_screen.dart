@@ -11,19 +11,23 @@ class Usuario {
   Usuario({required this.nome, required this.email, required this.tipo});
 }
 
-class UsersScreen extends StatelessWidget {
+class UsersScreen extends StatefulWidget {
   UsersScreen({Key? key}) : super(key: key);
 
+  State<UsersScreen> createState() => _UsersScreenState();
+}
+class _UsersScreenState extends State<UsersScreen> {
+
   final List<Usuario> usuarios = [
-    Usuario(nome: 'Nalyson Costa', email: 'nalysonmalvadin@gmail.com', tipo: 'Administrador'),
-    Usuario(nome: 'Kennedy Viana', email: 'Kenny1@email.com', tipo: 'Administrador'),
+    Usuario(nome: 'Nalyson Costa', email: 'nalysonmalvadin@gmail.com', tipo: 'Organização'),
+    Usuario(nome: 'Kennedy Viana', email: 'Kenny1@email.com', tipo: 'Organização'),
     Usuario(nome: 'Carlos Eduardo', email: 'carlos1@email.com', tipo: 'Cliente'),
     Usuario(nome: 'kaik Oliveira', email: 'kaik1@email.com', tipo: 'Cliente'),
   ];
 
   IconData _getIcon(String tipo) {
     switch (tipo.toLowerCase()) {
-      case 'administrador':
+      case 'organização':
         return Icons.admin_panel_settings;
       case 'aluno':
         return Icons.school;
@@ -34,7 +38,7 @@ class UsersScreen extends StatelessWidget {
 
   Color _getTipoColor(String tipo) {
     switch (tipo.toLowerCase()) {
-      case 'administrador':
+      case 'organização':
         return Colors.blue;
       case 'aluno':
         return Colors.red;
@@ -56,7 +60,7 @@ class UsersScreen extends StatelessWidget {
           },
         ),
         title: const Text(
-          'Usuários',
+          'Clientes',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

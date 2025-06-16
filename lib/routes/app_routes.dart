@@ -50,6 +50,9 @@ class AppRoutes {
       // usuarios: (context) => AuthGuard(child: const UsersScreen()),
       configuracoes: (context) =>
           AuthGuard(child: const ConfiguracoesScreen()),
+
+      usuarios: (context) => 
+        AuthGuard(child: UsersScreen()),
     };
   }
 }
