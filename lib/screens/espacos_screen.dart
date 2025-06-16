@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/user_service.dart';
 
 final Color laranja = const Color(0xFFF67828);
+final Color backgroundColor = Colors.white;
 
 class EspacosScreen extends StatefulWidget {
   const EspacosScreen({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
       return {
         'space_id': doc.id,
         'nome': data['name'] ?? 'Sem nome',
-        'icone': _iconePorNome(data['name'] ?? ''), // ícone dinâmico por nome
+        'icone': _iconePorNome(data['name'] ?? ''),
       };
     }).toList();
   }
@@ -55,7 +56,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
     if (nomeLower.contains('basquete')) return Icons.sports_basketball;
     if (nomeLower.contains('areia')) return Icons.sports_volleyball_outlined;
     if (nomeLower.contains('pista')) return Icons.directions_run;
-    return Icons.sports; // padrão
+    return Icons.sports;
   }
 
   @override
@@ -94,7 +95,7 @@ class _EspacosScreenState extends State<EspacosScreen> {
                     ),
                   ),
                   Text(
-                    'Tipo: $userType' ?? 'Tipo: Sem Informação',
+                    'Tipo: ${userType ?? 'Sem Informação'}',
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
@@ -110,29 +111,29 @@ class _EspacosScreenState extends State<EspacosScreen> {
               onTap: () => Navigator.pop(context),
             ),
             if (userType == 'Organização')
-            ListTile(
-              leading: const Icon(Icons.add_circle_outline),
-              title: const Text('Meus espaços'),
-              onTap: () async {
-                Navigator.pop(context);
-                final novoEspaco = await Navigator.pushNamed(
-                  context,
-                  '/meus-espacos',
-                );
-                if (novoEspaco != null && mounted) {
-                  setState(() {}); // recarrega os dados
-                }
-              },
-            ),
+              ListTile(
+                leading: const Icon(Icons.add_circle_outline),
+                title: const Text('Meus espaços'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final novoEspaco = await Navigator.pushNamed(
+                    context,
+                    '/meus-espacos',
+                  );
+                  if (novoEspaco != null && mounted) {
+                    setState(() {});
+                  }
+                },
+              ),
             if (userType == 'Organização')
-            ListTile(
-              leading: const Icon(Icons.supervised_user_circle_sharp),
-              title: const Text('Ver clientes'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/usuarios');
-              },
-            ),
+              ListTile(
+                leading: const Icon(Icons.supervised_user_circle_sharp),
+                title: const Text('Ver clientes'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/usuarios');
+                },
+              ),
             ListTile(
               leading: const Icon(Icons.event_note),
               title: const Text('Minhas Reservas'),
@@ -168,7 +169,8 @@ class _EspacosScreenState extends State<EspacosScreen> {
           ],
         ),
       ),
-      body: Padding(
+      body: Container(
+        color: backgroundColor,
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
@@ -236,19 +238,20 @@ class EspacoCard extends StatelessWidget {
   final String id;
   final IconData icone;
 
-  const EspacoCard({super.key, required this.nome, required this.icone, required this.id});
+  const EspacoCard(
+      {super.key, required this.nome, required this.icone, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: 6,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(
             context,
             '/agendamento',
-            arguments: [nome, id]
+            arguments: [nome, id],
           );
         },
         child: Center(

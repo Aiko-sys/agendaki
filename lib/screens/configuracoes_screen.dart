@@ -28,59 +28,95 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
         backgroundColor: laranja,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          const Text(
-            'Preferências',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 12),
-          SwitchListTile(
-            title: const Text('Notificações'),
-            value: notificacoesAtivadas,
-            onChanged: (value) {
-              setState(() {
-                notificacoesAtivadas = value;
-              });
-            },
-            activeColor: laranja,
-          ),
-          SwitchListTile(
-            title: const Text('Tema escuro'),
-            value: temaEscuro,
-            onChanged: (value) {
-              setState(() {
-                temaEscuro = value;
-              });
-            },
-            activeColor: laranja,
-          ),
-          const SizedBox(height: 24),
-          const Text(
-            'Conta',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 12),
-          ListTile(
-            leading: const Icon(Icons.lock),
-            title: const Text('Alterar senha'),
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Funcionalidade em desenvolvimento.')),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.delete_forever),
-            title: const Text('Excluir conta'),
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Funcionalidade em desenvolvimento.')),
-              );
-            },
-          ),
-        ],
+      body: Container(
+        color: Colors.grey[100], 
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            const Text(
+              'Preferências',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            _buildSwitchListTile(
+              title: 'Notificações',
+              value: notificacoesAtivadas,
+              onChanged: (value) {
+                setState(() {
+                  notificacoesAtivadas = value;
+                });
+              },
+            ),
+            _buildSwitchListTile(
+              title: 'Tema escuro',
+              value: temaEscuro,
+              onChanged: (value) {
+                setState(() {
+                  temaEscuro = value;
+                });
+              },
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Conta',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            _buildListTile(
+              icon: Icons.lock,
+              title: 'Alterar senha',
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Funcionalidade em desenvolvimento.')),
+                );
+              },
+            ),
+            _buildListTile(
+              icon: Icons.delete_forever,
+              title: 'Excluir conta',
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Funcionalidade em desenvolvimento.')),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSwitchListTile({
+    required String title,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: SwitchListTile(
+        title: Text(title),
+        value: value,
+        onChanged: onChanged,
+        activeColor: laranja,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+      ),
+    );
+  }
+
+  Widget _buildListTile({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        leading: Icon(icon, color: laranja),
+        title: Text(title),
+        onTap: onTap,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       ),
     );
   }

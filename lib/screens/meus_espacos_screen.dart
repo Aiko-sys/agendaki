@@ -15,7 +15,7 @@ class _MeusEspacosScreenState extends State<MeusEspacosScreen> {
   late Future<List<Map<String, dynamic>>> _espacosFuturo;
 
   Future<List<Map<String, dynamic>>> carregarMeusEspacos() async {
-    final uid = FirebaseAuth.instance.currentUser?.uid;
+    final uid = FirebaseAuth.instance.currentUser ?.uid;
 
     if (uid == null) return [];
 
@@ -30,7 +30,7 @@ class _MeusEspacosScreenState extends State<MeusEspacosScreen> {
         'id': doc.id,
         'nome': data['name'] ?? 'Sem nome',
       };
-      }).toList();
+    }).toList();
   }
 
   @override
@@ -38,8 +38,6 @@ class _MeusEspacosScreenState extends State<MeusEspacosScreen> {
     super.initState();
     _espacosFuturo = carregarMeusEspacos();
   }
-
-  
 
   void deletarEspaco(String id) async {
     await FirebaseFirestore.instance.collection('spaces').doc(id).delete();
@@ -53,7 +51,6 @@ class _MeusEspacosScreenState extends State<MeusEspacosScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: laranja,
@@ -94,7 +91,7 @@ class _MeusEspacosScreenState extends State<MeusEspacosScreen> {
               final espaco = espacos[index];
 
               return Card(
-                elevation: 4,
+                elevation: 6,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -136,8 +133,6 @@ class _MeusEspacosScreenState extends State<MeusEspacosScreen> {
                           if (confirm == true) {
                             deletarEspaco(espaco['id']);
                           }
-                          setState(() {
-                          });
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.red,

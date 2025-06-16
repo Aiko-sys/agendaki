@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 final Color laranja = const Color(0xFFF67828);
+final Color backgroundColor = const Color(0xFFF5F5F5); // Cor de fundo clara
+final Color cardColor = Colors.white; // Cor dos cards
 
 class AdicionarEspacoScreen extends StatefulWidget {
   const AdicionarEspacoScreen({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class _AdicionarEspacoScreenState extends State<AdicionarEspacoScreen> {
   final Map<DateTime, List<TimeOfDay>> _horariosPorDia = {};
   DateTime _diaSelecionado = DateTime.now();
   final List<DateTime> _diasSelecionados = [];
+
   void _selecionarHorario() async {
     final TimeOfDay? horario = await showTimePicker(
       context: context,
@@ -36,7 +39,7 @@ class _AdicionarEspacoScreenState extends State<AdicionarEspacoScreen> {
 
   void _salvarEspaco() async {
     if (_formKey.currentState!.validate()) {
-       final user = FirebaseAuth.instance.currentUser;
+      final user = FirebaseAuth.instance.currentUser ;
       if (user == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Usuário não autenticado.')),
@@ -70,7 +73,7 @@ class _AdicionarEspacoScreenState extends State<AdicionarEspacoScreen> {
         const SnackBar(content: Text('Espaço salvo com sucesso!')),
       );
 
-      Navigator.pop(context, true); 
+      Navigator.pop(context, true);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Preencha todos os campos e selecione pelo menos uma data e horário.')),
@@ -107,23 +110,20 @@ class _AdicionarEspacoScreenState extends State<AdicionarEspacoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Nome do Espaço'),
-              const SizedBox(height: 8),
-              TextFormField(
+              _buildTextField(
                 controller: _nomeController,
-                decoration: const InputDecoration(hintText: 'Ex: Campo de Futebol'),
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Digite o nome do espaço' : null,
+                label: 'Nome do Espaço',
+                hint: 'Ex: Campo de Futebol',
+                validator: (value) => value == null || value.isEmpty ? 'Digite o nome do espaço' : null,
               ),
               const SizedBox(height: 24),
-              const Text('Descrição'),
-              const SizedBox(height: 8),
-              TextFormField(
+              _buildTextField(
                 controller: _descricaoController,
-                decoration: const InputDecoration(hintText: 'Ex: Grama sintética, 18 x 36.'),
+                label: 'Descrição',
+                hint: 'Ex: Grama sintética, 18 x 36.',
               ),
               const SizedBox(height: 24),
-              const Text('Disponibilidade'),
+              const Text('Disponibilidade', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
               TableCalendar(
                 focusedDay: _diaSelecionado,
@@ -135,11 +135,28 @@ class _AdicionarEspacoScreenState extends State<AdicionarEspacoScreen> {
                     _diaSelecionado = selectedDay;
                   });
                 },
+                calendarStyle: CalendarStyle(
+                  selectedDecoration: BoxDecoration(
+                    color: laranja,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  todayDecoration: BoxDecoration(
+                    color: Colors.blueAccent.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
               ),
               const SizedBox(height: 12),
               ElevatedButton(
                 onPressed: _selecionarHorario,
                 child: const Text('Adicionar horário'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: laranja,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
               ),
               const SizedBox(height: 8),
               if (_horariosPorDia[_diaSelecionado] != null)
@@ -148,6 +165,7 @@ class _AdicionarEspacoScreenState extends State<AdicionarEspacoScreen> {
                   children: _horariosPorDia[_diaSelecionado]!
                       .map((hora) => Chip(
                             label: Text('${hora.hour.toString().padLeft(2, '0')}:${hora.minute.toString().padLeft(2, '0')}'),
+                            backgroundColor: laranja.withOpacity(0.2),
                           ))
                       .toList(),
                 ),
@@ -171,6 +189,37 @@ class _AdicionarEspacoScreenState extends State<AdicionarEspacoScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    String? Function(String?)? validator,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: laranja),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: laranja),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          ),
+          validator: validator,
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'users_screen.dart'; // importa para reconhecer o tipo Usuario
+import 'users_screen.dart';
 
 class UsuarioDetalhesScreen extends StatelessWidget {
   final Usuario usuario;
@@ -41,6 +41,32 @@ class UsuarioDetalhesScreen extends StatelessWidget {
               'Tipo: ${usuario.tipo}',
               style: const TextStyle(fontSize: 18),
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: laranja,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text('Editar Usuário'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {        
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text('Excluir Usuário'),
+            ),
           ],
         ),
       ),
@@ -49,7 +75,7 @@ class UsuarioDetalhesScreen extends StatelessWidget {
 
   IconData _getIcon(String tipo) {
     switch (tipo.toLowerCase()) {
-      case 'administrador':
+      case 'organização':
         return Icons.admin_panel_settings;
       case 'aluno':
         return Icons.school;
